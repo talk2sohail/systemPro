@@ -2,9 +2,14 @@ module changeme
 
 go 1.18
 
-require github.com/wailsapp/wails/v2 v2.2.0
+require (
+	github.com/osquery/osquery-go v0.0.0-00010101000000-000000000000
+	github.com/wailsapp/wails/v2 v2.2.0
+)
 
 require (
+	github.com/Microsoft/go-winio v0.4.16 // indirect
+	github.com/apache/thrift v0.16.0 // indirect
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect
@@ -32,3 +37,5 @@ require (
 )
 
 // replace github.com/wailsapp/wails/v2 v2.2.0 => /home/kenopasa/go/pkg/mod
+
+replace github.com/osquery/osquery-go => ./osquery-go
