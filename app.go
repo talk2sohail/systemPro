@@ -12,7 +12,7 @@ import (
 // App struct
 type App struct {
 	ctx    context.Context
-	c      Controller
+	c      *Controller
 	socket string
 	log    logger.Logger
 }
@@ -43,10 +43,20 @@ func (a *App) startup(ctx context.Context) {
 
 	a.SetSocket(socket)
 
-	_, err := NewController(a.socket, time.Second)
+	ctrl, err := NewController(a.socket, time.Second)
 	if err != nil {
 		a.log.Fatal(fmt.Sprintf("Failed to create the controller, error: %s", err))
 	}
-
+	a.c = ctrl
 	a.ctx = ctx
+}
+
+func (a *App) QueryTable(tableName string) (string, error) {
+	response, err := a.c.GetTable(tableName)
+
+	if err != nil {
+		a.log.Error(err.Error())
+		return "", fmt.Errorf("%s", err)
+	}
+	return response, nil
 }

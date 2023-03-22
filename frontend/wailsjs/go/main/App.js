@@ -6,6 +6,10 @@ export function GetSocket(arg1) {
   return window['go']['main']['App']['GetSocket'](arg1);
 }
 
+export function QueryTable(arg1) {
+  return window['go']['main']['App']['QueryTable'](arg1);
+}
+
 export function SetSocket(arg1) {
   return window['go']['main']['App']['SetSocket'](arg1);
 }

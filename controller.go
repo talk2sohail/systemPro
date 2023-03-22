@@ -30,8 +30,9 @@ func NewController(socket string, timeout time.Duration) (*Controller, error) {
 
 	return s, nil
 }
-func (c Controller) GetTable(query string) (string, error) {
+func (c Controller) GetTable(tableName string) (string, error) {
 
+	query := fmt.Sprintf("select * from %s", tableName)
 	//make the query to the daemon/shell
 	res, err := c.client.Query(query)
 	if err != nil {
