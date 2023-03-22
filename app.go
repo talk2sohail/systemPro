@@ -3,29 +3,50 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
+	logger "github.com/wailsapp/wails/v2/pkg/logger"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx    context.Context
+	c      Controller
+	socket string
+	log    logger.Logger
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	log := logger.NewDefaultLogger()
+	return &App{log: log}
 }
+
+func (a *App) SetSocket(name string) {
+	// you can setup some validation here
+	a.socket = name
+}
+
+func (a *App) GetSocket(name string) string { return a.socket }
 
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
+
+	args := os.Args[1:]
+	socket := args[0]
+
+	if socket == "" {
+		a.log.Fatal("Please provide the socket file path")
+	}
+
+	a.SetSocket(socket)
+
+	_, err := NewController(a.socket, time.Second)
+	if err != nil {
+		a.log.Fatal(fmt.Sprintf("Failed to create the controller, error: %s", err))
+	}
+
 	a.ctx = ctx
-}
-
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
-
-func (a *App) Fun(name string) string {
-	return fmt.Sprintf("Voila %s, It's time to build something from Wails!", name)
 }

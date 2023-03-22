@@ -23,7 +23,7 @@ func NewController(socket string, timeout time.Duration) (*Controller, error) {
 	c, err := osquery.NewClient(socket, timeout)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to create client, error: %s", err)
+		return nil, fmt.Errorf("client error: %s", err)
 	}
 
 	s.client = c

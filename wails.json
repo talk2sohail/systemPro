@@ -1,13 +1,14 @@
 {
-  "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "systemPro",
-  "outputfilename": "systemPro",
-  "frontend:install": "npm install",
-  "frontend:build": "npm run build",
-  "frontend:dev:watcher": "npm run dev",
-  "frontend:dev:serverUrl": "auto",
-  "author": {
-    "name": "kenopasa",
-    "email": "fire2dev@gmail.com"
-  }
+	"$schema": "https://wails.io/schemas/config.v2.json",
+	"name": "systemPro",
+	"outputfilename": "systemPro",
+	"frontend:install": "npm install",
+	"frontend:build": "npm run build",
+	"frontend:dev:watcher": "npm run dev",
+	"frontend:dev:serverUrl": "auto",
+	"appargs": "/home/kenopasa/.osquery/shell.em",
+	"author": {
+		"name": "kenopasa",
+		"email": "fire2dev@gmail.com"
+	}
 }
