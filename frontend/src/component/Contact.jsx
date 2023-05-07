@@ -1,93 +1,52 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../theme";
-import { mockDataContacts } from "../data/mockData";
 import Header from "./Header";
+import { tokens } from "../theme";
 import { useTheme } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { QueryTable } from "../../wailsjs/go/main/App.js";
+import { v4 as uuid4 } from "uuid";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import Button from "@mui/material/Button";
+import SelectTextFields from "./Select";
+
+function getColumnObject(tableData) {
+	return Object.keys(tableData).map((value) => {
+		return {
+			field: value,
+			headerName: value.toLocaleUpperCase(),
+			flex: 1,
+		};
+	});
+}
+
 const Contacts = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
+	const [tableData, setTable] = useState([]);
+	const [columns, setColumns] = useState([]);
+	const [selectedTableName, setSelectedTableName] = useState("");
 	useEffect(() => {
-		QueryTable("users").then((res) => {
-			console.log(res.json());
-		});
-	}, []);
-	const columns = [
-		{ field: "id", headerName: "ID", flex: 0.5 },
-		{ field: "registrarId", headerName: "Registrar ID" },
-		{
-			field: "name",
-			headerName: "Name",
-			flex: 1,
-			cellClassName: "name-column--cell",
-		},
-		{
-			field: "age",
-			headerName: "Age",
-			type: "number",
-			headerAlign: "left",
-			align: "left",
-		},
-		{
-			field: "phone",
-			headerName: "Phone Number",
-			flex: 1,
-		},
-		{
-			field: "phone1",
-			headerName: "Phone Number",
-			flex: 1,
-		},
-		{
-			field: "phone2",
-			headerName: "Phone Number",
-			flex: 1,
-		},
-		{
-			field: "phone3",
-			headerName: "Phone Number",
-			flex: 1,
-		},
-		{
-			field: "email",
-			headerName: "Email",
-			flex: 1,
-		},
-		{
-			field: "address",
-			headerName: "Address",
-			flex: 1,
-		},
-		{
-			field: "city",
-			headerName: "City",
-			flex: 1,
-		},
-		{
-			field: "zipCode",
-			headerName: "Zip Code",
-			flex: 1,
-		},
-		{
-			field: "zipCode1",
-			headerName: "Zip Code",
-			flex: 1,
-		},
-		{
-			field: "zipCode2",
-			headerName: "Zip Code",
-			flex: 1,
-		},
-	];
+		const fetchTableData = async (tableName) => {
+			const response = await QueryTable(tableName);
+			const data = JSON.parse(response);
+			setTable(data);
+			setColumns(getColumnObject(data[0]));
+		};
+		fetchTableData(selectedTableName);
+	}, [selectedTableName]);
 
+	const handleTableNameFromUser = (name) => {
+		setSelectedTableName(name);
+	};
+	const getRowId = () => {
+		return uuid4();
+	};
 	return (
 		<Box m="20px">
-			<Header
-				title="CONTACTS"
-				subtitle="List of Contacts for Future Reference"
-			/>
+			<Header title="TABLES" subtitle="List of supported tables by OsQuery" />
+			<SelectTextFields tableNameHandler={handleTableNameFromUser} />
 			<Box
 				m="40px 0 0 0"
 				height="75vh"
@@ -120,7 +79,8 @@ const Contacts = () => {
 					},
 				}}>
 				<DataGrid
-					rows={mockDataContacts}
+					getRowId={getRowId}
+					rows={tableData}
 					columns={columns}
 					components={{ Toolbar: GridToolbar }}
 				/>

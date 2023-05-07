@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "./component/TopBar.jsx";
 import SideBar from "./component/SideBar.jsx";
 import Contacts from "./component/Contact.jsx";

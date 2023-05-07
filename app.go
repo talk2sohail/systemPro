@@ -53,14 +53,9 @@ func (a *App) startup(ctx context.Context) {
 
 func (a *App) QueryTable(tableName string) (string, error) {
 	response, err := a.c.GetTable(tableName)
-	a.log.Info(response)
 	if err != nil {
 		a.log.Error(err.Error())
 		return "", fmt.Errorf("%s", err)
 	}
 	return response, nil
-}
-
-func (a *App) Greet(name string) string {
-	return "Hello " + name
 }
