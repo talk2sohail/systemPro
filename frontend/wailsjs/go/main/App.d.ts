@@ -3,6 +3,8 @@
 
 export function GetSocket(arg1:string):Promise<string>;
 
+export function Greet(arg1:string):Promise<string>;
+
 export function QueryTable(arg1:string):Promise<string>;
 
 export function SetSocket(arg1:string):Promise<void>;
