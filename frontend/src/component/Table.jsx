@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Header from "./Header";
 import { tokens } from "../theme";
@@ -6,10 +6,7 @@ import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { QueryTable } from "../../wailsjs/go/main/App.js";
 import { v4 as uuid4 } from "uuid";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import Button from "@mui/material/Button";
-import SelectTextFields from "./Select";
+import CustomSelectField from "./CustomSelectField";
 
 function getColumnObject(tableData) {
 	return Object.keys(tableData).map((value) => {
@@ -21,12 +18,15 @@ function getColumnObject(tableData) {
 	});
 }
 
-const Contacts = () => {
+const defaultSelectedTable = "users";
+
+const Table = () => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	const [tableData, setTable] = useState([]);
 	const [columns, setColumns] = useState([]);
-	const [selectedTableName, setSelectedTableName] = useState("");
+	const [selectedTableName, setSelectedTableName] =
+		useState(defaultSelectedTable);
 	useEffect(() => {
 		const fetchTableData = async (tableName) => {
 			const response = await QueryTable(tableName);
@@ -46,7 +46,10 @@ const Contacts = () => {
 	return (
 		<Box m="20px">
 			<Header title="TABLES" subtitle="List of supported tables by OsQuery" />
-			<SelectTextFields tableNameHandler={handleTableNameFromUser} />
+			<CustomSelectField
+				defaultTableName={defaultSelectedTable}
+				tableNameHandler={handleTableNameFromUser}
+			/>
 			<Box
 				m="40px 0 0 0"
 				height="75vh"
@@ -89,4 +92,4 @@ const Contacts = () => {
 	);
 };
 
-export default Contacts;
+export default Table;

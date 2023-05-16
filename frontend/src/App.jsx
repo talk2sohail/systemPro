@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TopBar from "./component/TopBar.jsx";
 import SideBar from "./component/SideBar.jsx";
-import Contacts from "./component/Contact.jsx";
+import Table from "./component/Table.jsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 
@@ -16,7 +16,7 @@ function App() {
 					<SideBar isSidebar={isSidebar} />
 					<main className="content">
 						<TopBar setIsSidebar={setIsSidebar} />
-						<Contacts />
+						<Table />
 					</main>
 				</div>
 			</ThemeProvider>

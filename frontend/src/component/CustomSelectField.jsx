@@ -22,7 +22,10 @@ const tables = [
 	},
 ];
 
-export default function SelectTextFields({ tableNameHandler }) {
+export default function CustomSelectField({
+	tableNameHandler,
+	defaultTableName,
+}) {
 	return (
 		<Box
 			component="form"
@@ -37,7 +40,7 @@ export default function SelectTextFields({ tableNameHandler }) {
 					id="outlined-select-currency"
 					select
 					label="Select"
-					defaultValue="Users"
+					defaultValue={defaultTableName}
 					helperText="Please select your table">
 					{tables.map((option) => (
 						<MenuItem key={option.value} value={option.value}>
