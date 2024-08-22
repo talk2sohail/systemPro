@@ -30,6 +30,7 @@ func NewController(socket string, timeout time.Duration) (*Controller, error) {
 
 	return s, nil
 }
+// GetTable returns the content of the tableName
 func (c *Controller) GetTable(tableName string) (string, error) {
 
 	query := fmt.Sprintf("select * from %s", tableName)
